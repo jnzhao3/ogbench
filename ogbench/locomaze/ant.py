@@ -120,3 +120,6 @@ class AntEnv(MujocoEnv, utils.EzPickle):
         qvel = self.data.qvel.copy()
         qpos[:2] = xy
         self.set_state(qpos, qvel)
+
+    def get_state(self):
+        return {"qpos": self.data.qpos.copy(), "qvel": self.data.qvel.copy()}

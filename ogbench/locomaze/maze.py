@@ -393,6 +393,10 @@ def make_maze_env(loco_env_type, maze_env_type, *args, **kwargs):
             # Save the goal observation.
             self.set_goal(goal_xy=goal_xy)
             self.set_xy(goal_xy)
+
+            if "set_state" in options:
+                self.set_state(options["set_state"]["qpos"].copy(), options["set_state"]["qvel"].copy())
+
             goal_ob = self.get_oracle_rep() if self._use_oracle_rep else self.get_ob()
             if render_goal:
                 goal_rendered = self.render()
@@ -401,6 +405,10 @@ def make_maze_env(loco_env_type, maze_env_type, *args, **kwargs):
             ob, info = super().reset(*args, **kwargs)
             self.set_goal(goal_xy=goal_xy)
             self.set_xy(init_xy)
+
+            if "set_state" in options:
+                self.set_state(options["set_state"]["qpos"].copy(), options["set_state"]["qvel"].copy())
+                
             ob = self.get_ob()
             info['goal'] = goal_ob
             if render_goal:
